@@ -57,8 +57,7 @@ export const getProducts = () => {
       const products = await fetchData();
       dispatch(
         cartActions.getProducts({
-          products: products,
-          // products: [],
+          products: products || [],
           isProductloading: false
         })
       );
