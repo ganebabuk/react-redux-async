@@ -18,6 +18,9 @@ const Products = (props) => {
         isProductloading && <p className={classes.loading}>Loading...</p>
       }
       {
+        !isProductloading && products.length ===0 && <p className={classes.loading}>Sorry! No products available.</p>
+      }
+      {
         products.length > 0 &&
         <React.Fragment>
         <h2>Buy your favorite products</h2>

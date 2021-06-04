@@ -58,6 +58,7 @@ export const getProducts = () => {
       dispatch(
         cartActions.getProducts({
           products: products,
+          // products: [],
           isProductloading: false
         })
       );
