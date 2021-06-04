@@ -1,36 +1,37 @@
 import ProductItem from './ProductItem';
 import classes from './Products.module.css';
-
-const DUMMY_PRODUCTS = [
-  {
-    id: 'p1',
-    price: 6,
-    title: 'My First Book',
-    description: 'The first book I ever wrote',
-  },
-  {
-    id: 'p2',
-    price: 5,
-    title: 'My Second Book',
-    description: 'The second book I ever wrote',
-  },
-];
+import { uiActions } from '../../store/ui-slice';
+import React, { useState, useEffect } from 'react';
 
 const Products = (props) => {
+  const [totalProducts, setTotalProducts] = useState([]);
+  useEffect(() => {
+    fetch('https://react-http-c332b-default-rtdb.firebaseio.com/products.json')
+    .then(response => response.json())
+    .then(data => setTotalProducts(data));
+  }, []);
   return (
     <section className={classes.products}>
-      <h2>Buy your favorite products</h2>
-      <ul>
-        {DUMMY_PRODUCTS.map((product) => (
-          <ProductItem
-            key={product.id}
-            id={product.id}
-            title={product.title}
-            price={product.price}
-            description={product.description}
-          />
-        ))}
-      </ul>
+      {
+        totalProducts.length === 0 && <h2>Loading...</h2>
+      }
+      {
+        totalProducts.length > 0 &&
+        <React.Fragment>
+        <h2>Buy your favorite products</h2>
+        <ul>
+          {totalProducts.map((product) => (
+            <ProductItem
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              price={product.price}
+              description={product.description}
+            />
+          ))}
+        </ul>
+        </React.Fragment>
+      }
     </section>
   );
 };
