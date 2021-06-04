@@ -37,6 +37,42 @@ export const fetchCartData = () => {
   };
 };
 
+export const getProducts = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://react-http-c332b-default-rtdb.firebaseio.com/products.json'
+      );
+
+      if (!response.ok) {
+        throw new Error('Could not fetch products!');
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      const products = await fetchData();
+      dispatch(
+        cartActions.getProducts({
+          products: products,
+          isProductloading: false
+        })
+      );
+    } catch (error) {
+      dispatch(
+        uiActions.showNotification({
+          status: 'error',
+          title: 'Error!',
+          message: 'Fetching products failed!',
+        })
+      );
+    }
+  };
+};
+
 export const sendCartData = (cart) => {
   return async (dispatch) => {
     dispatch(

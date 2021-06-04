@@ -5,6 +5,12 @@
   text-transform: uppercase;
 }
 
+.loading {
+  color: white;
+  margin: 2rem auto;
+  text-align: center;
+}
+
 .products ul {
   list-style: none;
   margin: 0;
